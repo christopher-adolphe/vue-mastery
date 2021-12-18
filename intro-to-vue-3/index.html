@@ -10,12 +10,25 @@
   </head>
   <body>
     <div id="app">
-      <h1>{{ product }}</h1>
-      <p>{{ description }}</p>
+      <div class="nav-bar"></div>
+
+      <div class="cart">Cart({{ cart.length }})</div>
+      
+      <!-- Binding to the `premium` props of the product-display component and -->
+      <!-- passing it the value of the `isPremium` data property of the root component -->
+      <!-- Binding to the `add-to-cart` event to notify the parent component when to call `handleAddToCart()` method -->
+      <!-- Binding to the `remove-from-cart` event to notify the parent component when to call `handleRemoveFromCart()` method -->
+      <product-display :premium="isPremium" :cart="cart.length" @add-to-cart="handleAddToCart" @remove-from-cart="handleRemoveFromCart"></product-display>
     </div>
 
     <!-- Import App -->
     <script src="./main.js"></script>
+
+    <!-- Import ProductDisplay component -->
+    <script src="./components/ProductDisplay.js"></script>
+
+    <!-- Import ProductDetails component -->
+    <script src="./components/ProductDetails.js"></script>
 
     <!-- Mount App -->
     <script>
