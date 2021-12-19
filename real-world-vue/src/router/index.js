@@ -7,11 +7,18 @@ const routes = [
   {
     path: '/',
     name: 'EventList',
+    props: (route) => ({ page: parseInt(route.query.page) || 1 }),
     component: EventList
   },
   {
     path: '/event/:id',
     name: 'EventDetails',
+    // Setting the `props` property to true in the route config
+    // to indicate Vue Router that we want to send route parameters
+    // as props to the Vue component. This creates a loose coupling
+    // between Vue Router and the component; meaning inside the
+    // component we don't have to rely on `$route.params.id` or
+    // `$route.query.id`
     props: true,
     component: EventDetails
   },
