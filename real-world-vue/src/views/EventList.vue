@@ -30,7 +30,8 @@
 // @ is an alias to /src
 import EventCard from '@/components/EventCard.vue';
 import EventService from '@/services/EventService';
-import { watchEffect } from 'vue';
+// import { watchEffect } from 'vue';
+import NProgress from 'nprogress';
 
 export default {
   name: 'EventList',
@@ -51,13 +52,56 @@ export default {
   // server to get the events via the EventService. This is the right
   // place to initialize data whose value rely on asynchronous sources as
   // the `created()` method is called on the initial load of the Vue component
-  created() {
-    // Using the `watchEffect()` function to run the `getEvents()` method again
-    // when a change occurs on reactive objects; in this case the `page` prop
-    // will change when we click on the Previous or Next link. Therefore, the
-    // `watchEffect()` function will track these changes and run the `getEvents()`
-    watchEffect(async () => {
+  // created() {
+  //   // Using the `watchEffect()` function to run the `getEvents()` method again
+  //   // when a change occurs on reactive objects; in this case the `page` prop
+  //   // will change when we click on the Previous or Next link. Therefore, the
+  //   // `watchEffect()` function will track these changes and run the `getEvents()`
+  //   watchEffect(async () => {
+  //     try {
+  //     this.events = null;
+  //     const response = await EventService.getEvents(2, this.page);
+
+  //     this.events = response.data;
+  //     this.totalEvents = response.headers['x-total-count'];
+  //   } catch (error) {
+  //     if (error.response && error.response.status === 404) {
+  //       // Creating a programmatic navigation in case the component
+  //       // fails to get the requested event from the API; i.e 404
+  //       this.$router.push({ name: '404Resource', params: { resource: 'event' } });
+  //     } else {
+  //       // In case we are facing a network error, then navigate programmatically to
+  //       // the `NetworkError` component
+  //       this.$router.push({ name: 'NetworkError' });
+  //     }
+  //   }
+  //   });
+  // },
+  // Using the `beforeRouteEnter()` in-component route guard
+  beforeRouteEnter(routeTo, routeFrom, next) {
+    next(async (comp) => {
       try {
+        NProgress.start();
+        comp.events = null;
+        const response = await EventService.getEvents(2, comp.page);
+
+        comp.events = response.data;
+        comp.totalEvents = response.headers['x-total-count'];
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          next({ name: '404Resource', params: { resource: 'event' } });
+        } else {
+          next({ name: 'NetworkError' });
+        }
+      } finally {
+        NProgress.done();
+      }
+    });
+  },
+  // Using the `beforeRouteUpdate()` in-component route guard
+  async beforeRouteUpdate() {
+    try {
+      NProgress.start();
       this.events = null;
       const response = await EventService.getEvents(2, this.page);
 
@@ -65,16 +109,13 @@ export default {
       this.totalEvents = response.headers['x-total-count'];
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        // Creating a programmatic navigation in case the component
-        // fails to get the requested event from the API; i.e 404
-        this.$router.push({ name: '404Resource', params: { resource: 'event' } });
+        return { name: '404Resource', params: { resource: 'event' } };
       } else {
-        // In case we are facing a network error, then navigate programmatically to
-        // the `NetworkError` component
-        this.$router.push({ name: 'NetworkError' });
+        return { name: 'NetworkError' };
       }
+    } finally {
+      NProgress.done();
     }
-    });
   },
   computed: {
     totalPages() {

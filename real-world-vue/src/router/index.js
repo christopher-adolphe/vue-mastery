@@ -105,3 +105,22 @@ const router = createRouter({
 });
 
 export default router;
+
+// 3 In-Component route guards hooks provided by Vue Router
+// 1. The `beforeRouteEnter()` method is called before the component is created, with no access to `this`
+// beforeRouteEnter(routeTo, routeFrom, next)
+
+// 2. The `beforeRouteUpdate()` method is called when route changes but the component has not. Has access to `this`
+// beforeRouteUpdate(routeTo, routeFrom, next)
+
+// 3. The `beforeRouteLeave()` method is called when route is navigated away from. Has access to `this`
+// beforeRouteLeave(routeTo, routeFrom, next)
+
+// routeTo - This refers to the route that is about to be navigated to
+// routeFrom - This refers to the route that is about to be navigated away from
+// next - This is a function that can be called in each of them to resolve the hook, and continue navigation
+
+// Calling `next()` -> continues navigation to the component listed in `routeTo`
+// Calling `next(false)` -> cancels the navigation
+// Calling `next('/')` -> redirects to the specified path
+// Calling `next({ name: 'EventList' })` -> redirects to the named path

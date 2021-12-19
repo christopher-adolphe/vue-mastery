@@ -2,6 +2,7 @@ import { createApp, reactive } from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import 'nprogress/nprogress.css';
 
 // Using the `reactive()` method from vue to
 // create a reactive object that will be shared
