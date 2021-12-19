@@ -5,6 +5,9 @@
       <router-link :to="{ name: 'About' }">About</router-link>
     </div>
 
+    <!-- Using the <router-view /> component provided by Vue Router  -->
+    <!-- as an outlet/placholder for the component that should render  -->
+    <!-- when the selected route is matched  -->
     <router-view />
   </div>
 </template>
