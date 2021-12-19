@@ -1,3 +1,7 @@
+// Creating a single file component (aka SFC) to encapuslate
+// the template, script and styling of a Vue component
+
+// The "template" section defines the component's template
 <template>
   <h1>Events for Good</h1>
 
@@ -6,6 +10,8 @@
   </div>
 </template>
 
+// The "script" section is a standard JavaScript module.
+// It should export a Vue component definition as its default export
 <script>
 // @ is an alias to /src
 import EventCard from '@/components/EventCard.vue';
@@ -33,6 +39,7 @@ export default {
 };
 </script>
 
+// The "style" section defines CSS associated with the component
 <style scoped>
 .events {
   display: flex;
