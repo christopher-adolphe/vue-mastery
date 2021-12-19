@@ -4,6 +4,7 @@ import EventLayout from '@/views/event/Layout';
 import EventDetails from '@/views/event/Details';
 import EventRegister from '@/views/event/Register';
 import EventEdit from '@/views/event/Edit';
+import EventCreate from '@/views/EventCreate';
 import About from '@/views/About';
 import NotFound from '@/views/NotFound';
 import NetworkError from '@/views/NetworkError';
@@ -73,6 +74,11 @@ const routes = [
         }
       }
     }
+  },
+  {
+    path: '/create-event',
+    name: 'EventCreate',
+    component: EventCreate
   },
   {
     path: '/event/:afterEvent(.*)',
