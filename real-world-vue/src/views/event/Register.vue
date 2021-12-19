@@ -9,8 +9,18 @@
 export default {
   name: 'EventRegister',
   props: ['event'],
+  // Using the `inject' property to make the `globalStore` reactive object available inside the component
+  inject: ['globalStore'],
   methods: {
     register() {
+      // Setting the `flashMessage` property available in the `globalStore` object to our successful message
+      this.globalStore.flashMessage = `You are successfully registered for ${this.event.title}`;
+
+      // Resetting the the `flashMessage` property to an empty string after 3 seconds
+      setTimeout(() => {
+        this.globalStore.flashMessage = '';
+      }, 3000);
+      
       // Using the `push()` method of Vue Router to navigate
       // programmatically to a new route. The `push()` method
       // takes an object as argument which contains the details
