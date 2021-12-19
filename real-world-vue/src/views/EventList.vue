@@ -3,21 +3,23 @@
 
 // The "template" section defines the component's template
 <template>
-  <h1>Events for Good</h1>
+  <div>
+    <h1>Events for Good</h1>
 
-  <div class="events">
-    <EventCard v-for="event in events" :key="event.id" :event="event" />
+    <div class="events">
+      <EventCard v-for="event in events" :key="event.id" :event="event" />
 
-    <div class="events__pagination">
-      <span>
-        <router-link :to="{ name: 'EventList', query: { page: page - 1 } }" rel="Previous" v-if="page !== 1">&#60; Prev</router-link>
-      </span>
+      <div class="events__pagination">
+        <span>
+          <router-link :to="{ name: 'EventList', query: { page: page - 1 } }" rel="Previous" v-if="page !== 1">&#60; Prev</router-link>
+        </span>
 
-      <span>{{ page }} of {{ totalPages }}</span>
+        <span>{{ page }} of {{ totalPages }}</span>
 
-      <span>
-        <router-link :to="{ name: 'EventList', query: { page: page + 1 } }" rel="Next" v-if="page !== totalPages">Next &#62;</router-link>
-      </span>
+        <span>
+          <router-link :to="{ name: 'EventList', query: { page: page + 1 } }" rel="Next" v-if="page !== totalPages">Next &#62;</router-link>
+        </span>
+      </div>
     </div>
   </div>
 </template>
