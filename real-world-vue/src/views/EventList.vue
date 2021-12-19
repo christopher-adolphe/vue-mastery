@@ -64,7 +64,15 @@ export default {
       this.events = response.data;
       this.totalEvents = response.headers['x-total-count'];
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 404) {
+        // Creating a programmatic navigation in case the component
+        // fails to get the requested event from the API; i.e 404
+        this.$router.push({ name: '404Resource', params: { resource: 'event' } });
+      } else {
+        // In case we are facing a network error, then navigate programmatically to
+        // the `NetworkError` component
+        this.$router.push({ name: 'NetworkError' });
+      }
     }
     });
   },

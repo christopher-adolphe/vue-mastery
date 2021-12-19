@@ -5,6 +5,8 @@ import EventDetails from '@/views/event/Details';
 import EventRegister from '@/views/event/Register';
 import EventEdit from '@/views/event/Edit';
 import About from '@/views/About';
+import NotFound from '@/views/NotFound';
+import NetworkError from '@/views/NetworkError';
 
 const routes = [
   {
@@ -18,10 +20,12 @@ const routes = [
     name: 'EventLayout',
     // Setting the `props` property to true in the route config
     // to indicate Vue Router that we want to send route parameters
-    // as props to the Vue component. This creates a loose coupling
-    // between Vue Router and the component; meaning inside the
-    // component we don't have to rely on `$route.params.id` or
-    // `$route.query.id`
+    // as props to the Vue component. Meaning we indicate Vue Router
+    // to make the dynamic segment of the path; i.e `:id` available as
+    // a prop in the `EventLayout` component and its children components
+    // This creates a loose coupling between Vue Router and the component;
+    // meaning inside the component we don't have to rely on `$route.params.id`
+    // or `$route.query.id`
     props: true,
     component: EventLayout,
     // Using the `children` property to configure nested routes for events
@@ -66,6 +70,23 @@ const routes = [
   {
     path: '/about',
     redirect: { name: 'About' }
+  },
+  // Using the `:catchAll(.*)` to match all routes that don't match an existing route
+  {
+    path: '/:catchAll(.*)',
+    name: 'NotFound',
+    component: NotFound
+  },
+  {
+    path: '/404/:resource',
+    name: '404Resource',
+    props: true,
+    component: NotFound
+  },
+  {
+    path: '/network-error',
+    name: 'NetworkError',
+    component: NetworkError
   }
   // {
   //   path: '/about',
