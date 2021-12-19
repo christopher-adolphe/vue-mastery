@@ -50,7 +50,10 @@ const routes = [
       {
         path: 'edit',
         name: 'EventEdit',
-        component: EventEdit
+        component: EventEdit,
+        // Using the `meta` property to add meta-data to a route that can
+        // then be used to in per-route guards
+        meta: { requireAuth: true }
       },
     ],
     beforeEnter: async (to) => {
@@ -121,11 +124,39 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
+  // Using the `scrollBehavior()` method to always move the page to the
+  // top upon navigation
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { top: 0 };
+    }
+  }
 });
 
-router.beforeEach(() => {
+router.beforeEach((to, from) => {
   NProgress.start();
+
+  // Implementing a guard based on the `meta` property of the route
+  const isNotAuthorized = true;
+
+  if (to.meta.requireAuth && isNotAuthorized) {
+    globalStore.flashMessage = 'Sorry, you are not authorized to view this page!';
+
+    setTimeout(() => {
+      globalStore.flashMessage = '';
+    }, 3000);
+
+    // Checking if there was a previous page
+    if (from.href) {
+      // Cancelling the navigation
+      return false;
+    } else {
+      return { path: '/' };
+    }
+  }
 });
 
 router.afterEach(() => {
