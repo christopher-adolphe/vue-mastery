@@ -31,7 +31,7 @@
 import EventCard from '@/components/EventCard.vue';
 import EventService from '@/services/EventService';
 // import { watchEffect } from 'vue';
-import NProgress from 'nprogress';
+// import NProgress from 'nprogress';
 
 export default {
   name: 'EventList',
@@ -81,7 +81,7 @@ export default {
   beforeRouteEnter(routeTo, routeFrom, next) {
     next(async (comp) => {
       try {
-        NProgress.start();
+        // NProgress.start();
         comp.events = null;
         const response = await EventService.getEvents(2, comp.page);
 
@@ -94,14 +94,14 @@ export default {
           next({ name: 'NetworkError' });
         }
       } finally {
-        NProgress.done();
+        // NProgress.done();
       }
     });
   },
   // Using the `beforeRouteUpdate()` in-component route guard
   async beforeRouteUpdate() {
     try {
-      NProgress.start();
+      // NProgress.start();
       this.events = null;
       const response = await EventService.getEvents(2, this.page);
 
@@ -114,7 +114,7 @@ export default {
         return { name: 'NetworkError' };
       }
     } finally {
-      NProgress.done();
+      // NProgress.done();
     }
   },
   computed: {

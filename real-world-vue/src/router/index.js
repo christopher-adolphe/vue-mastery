@@ -7,6 +7,9 @@ import EventEdit from '@/views/event/Edit';
 import About from '@/views/About';
 import NotFound from '@/views/NotFound';
 import NetworkError from '@/views/NetworkError';
+import NProgress from 'nprogress';
+import EventService from '@/services/EventService';
+import globalStore from '@/store';
 
 const routes = [
   {
@@ -49,7 +52,24 @@ const routes = [
         name: 'EventEdit',
         component: EventEdit
       },
-    ]
+    ],
+    beforeEnter: async (to) => {
+      try {
+        const response = await EventService.getEvent(to.params.id);
+  
+        globalStore.event = response.data;
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          // Creating a programmatic navigation in case the component
+          // fails to get the requested event from the API; i.e 404
+          return { name: '404Resource', params: { resource: 'event' } };
+        } else {
+          // In case we are facing a network error, then navigate programmatically to
+          // the `NetworkError` component
+          return { name: 'NetworkError' };
+        }
+      }
+    }
   },
   {
     path: '/event/:afterEvent(.*)',
@@ -104,4 +124,22 @@ const router = createRouter({
   routes
 });
 
+router.beforeEach(() => {
+  NProgress.start();
+});
+
+router.afterEach(() => {
+  NProgress.done();
+});
+
 export default router;
+
+// 3 Global navigation guards hooks provided by Vue Router
+// 1. The `beforeEach()` method is called before each navigation, and before in-component guards
+// router.beforeEach((to, from) => { ... });
+
+// 2. The `beforeResolve()` method is called before each navigation, but after in-component guards
+// router.beforeResolve((to, from) => { ... });
+
+// 3. The `afterEach()` method is called after navigation is complete
+// router.afterEach((to, from) => { ... });
