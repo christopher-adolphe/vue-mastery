@@ -44,6 +44,6 @@ const app = Vue.createApp({
   // NOTE: `computed` properties are actually defined as methods that return
   // a value from a logic based on properties of the data object and can
   // be bound in the html template in the same way we would have bound a 
-  // property of the data object; i.e {{ title }}
+  // property of the data object; e.g {{ title }}
   computed: {}
 });

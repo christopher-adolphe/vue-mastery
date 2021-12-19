@@ -6,7 +6,7 @@ app.component('review-form', {
   <form class="review-form" @submit.prevent="onSubmit">
     <h3>Leave a review</h3>
     <label for="name">Name:</label>
-    <!-- Binding to the "v-model" directive to create two-way data binding -->
+    <!-- Using to the "v-model" directive to create two-way data binding -->
     <!-- between the input element and the "name" data property -->
     <input id="name" v-model="name">
 
@@ -14,7 +14,7 @@ app.component('review-form', {
     <textarea id="review" v-model="review"></textarea>
 
     <label for="rating">Rating:</label>
-    <!-- Binding to the "v-model.number" directive which a modifier to typecast the -->
+    <!-- Using to the "v-model.number" directive with a modifier to typecast the -->
     <!-- value to a number -->
     <select id="rating" v-model.number="rating">
       <option>5</option>

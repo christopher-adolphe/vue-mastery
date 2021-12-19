@@ -1,6 +1,6 @@
 // Using the `component()` method to create child component
 // that can then be added to the root component of the Vue
-// application. It take two arguments, the first argument is
+// application. It takes two arguments, the first argument is
 // the name of the component which will be used as an html tag
 // and the second argument is an object which will contain the
 // data properties and methods of this component
@@ -18,6 +18,8 @@ app.component('product-display', {
       require: true
     }
   },
+  // The `template` property contains the html markup, the data 
+  // and event bindings of the component
   template:
   /*html*/
   `<div class="product-display">
