@@ -1,13 +1,23 @@
 <template>
   <div id="real-world-vue">
+    <div id="flashMessage" v-if="this.globalStore.flashMessage">{{ this.globalStore.flashMessage }}</div>
     <div id="nav">
       <router-link :to="{ name: 'EventList' }">Events</router-link> |
       <router-link :to="{ name: 'About' }">About</router-link>
     </div>
 
+    <!-- Using the <router-view /> component provided by Vue Router  -->
+    <!-- as an outlet/placholder for the component that should render  -->
+    <!-- when the selected route is matched  -->
     <router-view />
   </div>
 </template>
+
+<script>
+export default {
+  inject: ['globalStore']
+};
+</script>
 
 <style>
 #real-world-vue {
@@ -33,5 +43,19 @@
 
 h4 {
   font-size: 20px;
+}
+
+@keyframes yellowfade {
+  from {
+    background: yellow;
+  }
+  to {
+    background: transparent;
+  }
+}
+
+#flashMessage {
+  animation-name: yellowfade;
+  animation-duration: 3s;
 }
 </style>
