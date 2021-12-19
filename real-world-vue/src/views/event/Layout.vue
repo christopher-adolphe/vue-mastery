@@ -42,7 +42,6 @@ export default {
         // the `NetworkError` component
         this.$router.push({ name: 'NetworkError' });
       }
-      
     }
   }
 };
