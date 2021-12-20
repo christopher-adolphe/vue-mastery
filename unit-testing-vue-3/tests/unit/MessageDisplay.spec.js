@@ -12,7 +12,7 @@ beforeEach(() => {
   jest.clearAllMocks();
 });
 
-describe('#DisplayMessage', () => {
+describe('#MessageDisplay', () => {
   it('should call #getMessage method and display a message', async () => {
     const mockMessage = 'Hello from the db!';
     // Using the `mockResolveValueOnce()` method to mock a return value
